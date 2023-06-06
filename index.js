@@ -11,12 +11,12 @@ app.use( express.static('public') );
 
 
 // Rutas
-// app.get('/', ( req, res ) => {
-//     console.log('se requiere el /');
-//     res.json({
-//         ok: true
-//     })
-// });
+// TODO: auth -> crear, login, remover
+app.use('/api/auth', require('./routes/auth'));
+
+
+// TODO: CRUD -> eventos
+
 
 
 
