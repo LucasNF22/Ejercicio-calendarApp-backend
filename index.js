@@ -11,7 +11,7 @@ app.use( express.static('public') );
 
 
 // Rutas
-// TODO: auth -> crear, login, remover
+// TODO: auth -> crear, login, renew
 app.use('/api/auth', require('./routes/auth'));
 
 
