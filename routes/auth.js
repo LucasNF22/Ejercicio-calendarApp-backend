@@ -6,31 +6,15 @@
 
 
 const { Router } = require('express');
-
 const router = Router();
 
-router.post('/new', ( req, res ) => {
-    
-    res.json({
-        ok: true,
-        msg: 'registro'
-    })
-});
+const { crearUsuario, loginUsuario, revalidarToken } = require('../controllers/authController');
 
-router.post('/', ( req, res ) => {
-    
-    res.json({
-        ok: true,
-         msg: 'login'
-    })
-});
 
-router.get('/renew', ( req, res ) => {
-    
-    res.json({
-        ok: true,
-        msg: 'renew'
-    })
-});
+router.post('/new', crearUsuario );
+router.post('/', login );
+router.get('/renew', renovarToken );
+
+
 
 module.exports = router;
