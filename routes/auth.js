@@ -15,11 +15,19 @@ const { crearUsuario, loginUsuario, revalidarToken } = require('../controllers/a
 router.post(
     '/new', 
     [   // Middlewares
-        check( "name" ).not().isEmpty(),
+        check( 'name', 'el nombre es obligatorio' ).notEmpty(),
+        check( 'email', 'el mail es obligatorio' ).isEmail(),
+        check( 'password', 'el password debe tener al menos 6 caracteres' ).notEmpty().isLength({min: 6}),
     ],
     crearUsuario );
 
-router.post('/', loginUsuario );
+router.post(
+    '/', 
+    [
+        check( 'email', 'el mail es obligatorio' ).isEmail(),
+        check( 'password', 'el password debe tener al menos 6 caracteres' ).notEmpty().isLength({min: 6}),
+    ],
+    loginUsuario );
 
 router.get('/renew', revalidarToken );
 
