@@ -1,17 +1,18 @@
 const express = require('express');
+const { validationResult } = require('express-validator');
 
 
 const crearUsuario = ( req, res = response ) => {
 
     const { name, email, password } = req.body;
 
-    if( name.length < 3 ){
-        res.status(400).json({
-            ok: false,
-            msg: 'El nombre debe tener al menos 3 letras.',
-        })
-    }
-    
+
+    // Manuejo de errores
+    const errors = validationResult( req );
+
+    console.log(errors);
+
+       
     res.json({
         ok: true,
         msg: 'registro',
@@ -43,7 +44,7 @@ const revalidarToken = ( req, res = response ) => {
 
 module.exports = {
     crearUsuario,
-    login,
-    renovarToken
+    loginUsuario,
+    revalidarToken
 
 }
