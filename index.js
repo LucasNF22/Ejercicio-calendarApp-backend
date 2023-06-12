@@ -1,10 +1,14 @@
 const express = require("express");
 require('dotenv').config();
+const { dbConection } = require('./database/config')
 
 // console.log(process.env);
 
 // Crear el servidor de express
 const app = express();
+
+// Conexion a base de datos
+dbConection();
 
 // Dictorio Publico
 app.use( express.static('public') );
