@@ -48,16 +48,46 @@ const crearUsuario = async( req, res = response ) => {
     }
 };
 
-const loginUsuario = ( req, res = response ) => {
+const loginUsuario = async( req, res = response ) => {
 
     const { email, password } = req.body;
+
+    try {
+
+        const usuario = await Usuario.findOne({ email });
+        if( !usuario ) {
+            return res.status( 400 ).json({
+                ok: false,
+                msg: 'Credenciales inválidas.'
+            })
+        };
+
+        // Comparar contraseñas.
+        const validPassword = bcrypt.compareSync( password, usuario.password );
+        if ( !validPassword ) {
+            return res.status( 400 ).json({
+                ok: false,
+                msg: 'contraseña inválida.'
+            })
+        };
+
+        // Generar el Jason Web Token
+        res.json({
+            ok: true,
+            uid: usuario._id,
+            name: usuario.name
+        })
+
+        
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            ok: false,
+            msg: 'comuniquese con el administrador'
+        });
+    };
     
-    res.status(201).json({
-        ok: true,
-        msg: 'login',
-        email, 
-        password
-    });
+
 };
 
 const revalidarToken = ( req, res = response ) => {
