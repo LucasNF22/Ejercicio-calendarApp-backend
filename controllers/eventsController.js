@@ -1,23 +1,44 @@
-const { response } = require('express')
+const { response } = require('express');
+const Evento = require('../models/evento');
+const { body } = require('express-validator');
 
-const getEventos = ( req, res = response ) => {
+
+const getEventos = async( req, res = response ) => {
+
+    const eventos = await Evento.find()
+                                .populate('user', 'name')
+
+
+
     res.json(
         {
             ok: true,
-            msg: 'getEventos'
-        })
+            eventos,
+        });
 };
 
-const createEvento = ( req, res = response ) => {
+const createEvento = async( req, res = response ) => {
 
-    console.log(req.body);
+    const evento = new Evento( req.body );
 
+    try {
+        
+        evento.user = req.uid;
 
-    res.json(
-        {
+        const eventoGuardado = await evento.save();
+
+        res.json({
             ok: true,
-            msg: 'createEvento'
-        })
+            evento: eventoGuardado,
+        });
+        
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            ok: false,
+            msg: 'Comuniquese con el administrador.'
+        });
+    }
 };
 
 const UpdateEvento = ( req, res = response ) => {
@@ -35,6 +56,7 @@ const deleteEvento = ( req, res = response ) => {
             msg: 'deleteEvento'
         })
 };
+
 
 module.exports ={
     getEventos,
