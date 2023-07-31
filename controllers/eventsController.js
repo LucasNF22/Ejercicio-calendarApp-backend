@@ -11,7 +11,6 @@ const getEventos = async( req, res = response ) => {
                                 .populate('user', 'name')
 
 
-
     res.json(
         {
             ok: true,

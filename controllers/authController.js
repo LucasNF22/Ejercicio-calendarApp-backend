@@ -9,8 +9,6 @@ const crearUsuario = async( req, res = response ) => {
 
     const { name, email, password } = req.body;
 
-
-
     try {
 
         let usuario = await Usuario.findOne({ email });
@@ -94,7 +92,6 @@ const loginUsuario = async( req, res = response ) => {
         });
     };
     
-
 };
 
 const revalidarToken = async( req, res = response ) => {
@@ -106,7 +103,8 @@ const revalidarToken = async( req, res = response ) => {
     
     res.json({
         ok: true,
-        msg: 'renew',
+        uid, 
+        name,
         token
  
     });
