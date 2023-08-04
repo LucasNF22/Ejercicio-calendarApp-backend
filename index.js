@@ -4,7 +4,7 @@ const cors = require("cors");
 const { dbConection } = require('./database/config')
 const path = require('path');
 
-// console.log(process.env);
+console.log(process.env);
 
 // Crear el servidor de express
 const app = express();
@@ -19,7 +19,7 @@ app.use(cors());
 // app.use( express.static('public') );
 app.use(express.static(path.join(__dirname, 'public')))
 
-const url = path.join(__dirname, 'public')
+const url = path.join(__dirname, 'public', 'index.html')
 console.log(url);
 
 // Lectura y parseo del body
@@ -35,7 +35,7 @@ app.use('/api/events', require('./routes/events'));
 //     res.sendFile( __dirname + '/public/index.html' );
 // })
 app.get('/*', (req,res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+    res.sendFile(path.join('https://ej-clndr-bknd.vercel.app/', 'public', 'index.html'));
 });
 
 
